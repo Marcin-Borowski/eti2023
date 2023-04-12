@@ -1,49 +1,46 @@
 <script>
   import Post from "$lib/components/Post.svelte";
 
-  let posts = [
-    {
-      title: "Curabitur est gravida et libero vitae dictum.",
-      abstract: "Salutantibus vitae elit libero, a pharetra augue. Pellentesque habitant morbi tristique senectus et netus. Tityre, tu patulae recubans sub tegmine fagi dolor.",
-      active: true,
-    },
-    {
-      title: "Excepteur sint obcaecat cupiditat non proident culpa.",
-      abstract: "Nihilne te <strong>nocturnum</strong> praesidium Palati, nihil urbis vigiliae. Non equidem invideo, miror magis posuere velit aliquet. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Ullamco laboris nisi ut aliquid ex ea commodi consequat. Nihil hic munitissimus habendi senatus locus, nihil horum? Nec dubitamus multa iter quae et nos invenerat.",
-      active: true,
-      keywords: "test, cos, eti"
-    },
-  ];
+  let posts = [];
 
-  let titleInput;
-  let title = ""
-  let abstractInput;
-  let abstract = ""
-  
+  const getPosts = async () => {
+    const url = "https://jsonplaceholder.typicode.com/posts";
 
-    const onClick = () => {
-     posts = [...posts, {
-        title,
-        abstract,
+    console.log(url);
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    posts = data.map((item) => {
+      return {
+        title: item.title, 
+        abstract: item.body,
         active: true,
-        keywords: ""
-      }]
+        keywords: ''
+      };
+    })
 
-      titleInput.value = ""
-      abstractInput.value = ""
-    }
+    // const query=  "qui est esse";
+    // posts = posts.filter((item, i) => item.title == query);
+    // posts = [posts.find((item, i) => item.title == query)];
+  }
 
 </script>
 
 <h1 class="text-4xl text-center text-sky-700">Mój BLOG</h1>
 
-<form class="grid grid-cols-1 gap-2 w-2/5 mx-auto my-8"> 
-  <input bind:this={titleInput} bind:value={title} placeholder="Tytuł" type="text" class="border border-violet-700 py-1 px-3">
-  <textarea bind:this={abstractInput} bind:value={abstract} placeholder="Treść" class="border border-violet-700 py-1 px-3"></textarea>
-  <button on:click={onClick} class="bg-violet-700 text-white px-3 py-1 hover:bg-violet-800">Dodaj</button>
+<form method="post" action="?/create" class="grid grid-cols-1 gap-2 w-2/5 mx-auto my-8"> 
+  <input name="title" placeholder="Tytuł" type="text" class="border border-violet-700 py-1 px-3">
+  <textarea placeholder="Treść" class="border border-violet-700 py-1 px-3"></textarea>
+  <button class="bg-violet-700 text-white px-3 py-1 hover:bg-violet-800">Dodaj</button>
 </form>
 
 
+<div class="p-4 mx-auto text-center">
+  <button
+    class="bg-violet-700 text-white px-3 py-1 hover:bg-violet-800"
+    on:click={getPosts}>Pobierz</button>
+</div>
 <div class="grid grid-cols-2 gap-4">
   {#each posts as item}
     {#if item.active}

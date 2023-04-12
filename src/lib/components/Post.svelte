@@ -8,7 +8,4 @@
   <div class="bg-stone-50">
     {@html abstract}
   </div>
-  <slot>
-    
-  </slot>
 </div>
