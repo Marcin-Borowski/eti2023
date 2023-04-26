@@ -5,13 +5,7 @@ export const load = async () => {
 
   const prisma = new PrismaClient();
 
-  posts = await prisma.post.findMany(
-    {
-      where: {
-        id: 1
-      }
-    }
-  )
+  posts = await prisma.post.findMany(    )
 
   prisma.$disconnect()
 
