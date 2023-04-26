@@ -1,6 +1,7 @@
 <!-- @format -->
 <script>
   import Post from "$lib/components/Post.svelte";
+  import List from "../../lib/components/List.svelte";
 
   export let data;
   let posts = data.posts;
@@ -30,9 +31,5 @@
 </form>
 
 <div class="grid grid-cols-2 gap-4">
-  {#each posts as item}
-    {#if item.active}
-      <Post {...item} on:usun={onUsun} />
-    {/if}
-  {/each}
+  <List items={posts} on:usun={onUsun} />
 </div>
