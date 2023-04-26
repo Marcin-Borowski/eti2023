@@ -22,7 +22,7 @@ export const actions = {
     const content = data.get('content');
 
     const prisma = new PrismaClient();
-    const result = await prisma.post.create({
+    await prisma.post.create({
       data: {
         title,
         slug: slugify(title, { lower: true, locale: 'pl' }),
