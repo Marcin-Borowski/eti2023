@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: etiAPP
+    ports:
+      - "80:3000"
+    volumes:
+      - ./app/prisma:/usr/local/app/prisma
+    restart: unless-stopped
+    networks:
+      - cos
+
+networks:
+  cos:
+    driver: bridge
